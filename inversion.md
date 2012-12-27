@@ -36,7 +36,7 @@ will create an object.
 
                                 resolve(object, path)  = path.length === 0 ? object : resolve(object[path[0]], path.slice(1)),
 
-                                invert(object, path)   = new $.inversion(object, p, resolve(object, p)) -where [p = make_path(path)]],
+                                invert(object, path)   = new $.inversion(object.constructor === $.inversion ? object.uninvert() : object, p, resolve(object, p)) -where [p = make_path(path)]],
 
 # Zipping and rebasing
 

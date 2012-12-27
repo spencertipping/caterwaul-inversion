@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  21a69679fcd0d4aa6addee06aa2a763b
-# istate: 84c4a1ab96ff00f7f9e516c4abbc784e
+# state:  809c90eb9244d399465962b2bb323c41
+# istate: 85dbf40d8a6d08e1424c18f7cebb22f5
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1802,7 +1802,7 @@ will create an object.
 
                             resolve(object, path)  = path.length === 0 ? object : resolve(object[path[0]], path.slice(1)),
 
-                            invert(object, path)   = new $.inversion(object, p, resolve(object, p)) -where [p = make_path(path)]],
+                            invert(object, path)   = new $.inversion(object.constructor === $.inversion ? object.uninvert() : object, p, resolve(object, p)) -where [p = make_path(path)]],
 
 Zipping and rebasing.
 Every inversion contains a 'root' or 'base' that keeps its context valid, but you can change this dynamically. The only requirement is that the new base support the current path (i.e. not map any prefix
