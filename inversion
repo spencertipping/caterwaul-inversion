@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  809c90eb9244d399465962b2bb323c41
-# istate: 85dbf40d8a6d08e1424c18f7cebb22f5
+# state:  109fec5cdb0a1ad2b43f34519d04a365
+# istate: 704a6ca4a7ca8ff04b7f90e561366167
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1791,18 +1791,19 @@ Paths can be specified either as strings or as arrays. In string form, a path is
 a property with the given name, and the [index] form indexes into an array. Which one you use matters: modifying something down an [index] path will cause an array to be created, whereas the .name path
 will create an object.
 
-  where [statics = wcapture[pathcomponent          = /\.[^\[.]+|\[\d+\]/g,
-                            parse_pathcomponent(s) = /^\[(\d+)\]$/.exec(s) -re [it ? +it[1] : s.substr(1)],
-                            parse_path(s)          = s.match(pathcomponent) *parse_pathcomponent -seq -rescue- raise[new Error('invalid path syntax: #{s}')],
-                            make_path(x)           = x.constructor === String ? parse_path(x) : x,
+  where [statics = wcapture[path_component          = /\.[^\[.]+|\[\d+\]/g,
+                            parse_path_component(s) = /^\[(\d+)\]$/.exec(s) -re [it ? +it[1] : s.substr(1)],
+                            parse_path(s)           = s.match(path_component) *parse_path_component -seq -rescue- raise[new Error('invalid path syntax: #{s}')],
+                            make_path(x)            = x.constructor === String ? parse_path(x) : x,
 
-                            patch(object, path, v) = path.length === 0              ? v
-                                                   : path[0].constructor === String ? object /pairs *[x[0] === k ? [k, patch(x[1], path.slice(1), v)] : x] /object -seq -where [k = path[0]]
-                                                   :                                  object        *[xi   === i ?     patch(x,    path.slice(1), v)  : x]         -seq -where [i = path[0]],
+                            patch(object, path, v)  = path.length === 0              ? v
+                                                    : path[0].constructor === String ? object /pairs *[x[0] === k ? [k, patch(x[1], path.slice(1), v)] : x] /object -seq -where [k = path[0]]
+                                                    :                                  object        *[xi   === i ?     patch(x,    path.slice(1), v)  : x]         -seq -where [i = path[0]],
 
-                            resolve(object, path)  = path.length === 0 ? object : resolve(object[path[0]], path.slice(1)),
+                            resolve(object, path)   = path.length === 0 ? object : resolve(object[path[0]], path.slice(1)),
+                            as_object(object)       = object.constructor === $.inversion ? object.uninvert() : object,
 
-                            invert(object, path)   = new $.inversion(object.constructor === $.inversion ? object.uninvert() : object, p, resolve(object, p)) -where [p = make_path(path)]],
+                            invert(object, path)    = new $.inversion(object, p, resolve(object /!as_object, p)) -where [p = make_path(path)]],
 
 Zipping and rebasing.
 Every inversion contains a 'root' or 'base' that keeps its context valid, but you can change this dynamically. The only requirement is that the new base support the current path (i.e. not map any prefix
@@ -1812,7 +1813,14 @@ path onto null or undefined). If the inversion is based on another inversion, th
                             uninvert(root) = $.inversion.patch(this.context(root), this.path, this.v),
 
                             rebase(root)   = new $.inversion(root, this.path, this.v),
-                            edit(value)    = new $.inversion(this.base, this.path, value)]]});
+                            edit(value)    = new $.inversion(this.base, this.path, value),
+
+Relative inversions.
+You can create a linked list of edits that you can later zip onto a new base. To do this, use the relative up() and down() methods. These create new inversions linked to the receiver (and therefore
+modifying the same root), but with different paths.
+
+                            up(n)      = $.inversion.invert(this, this.path.slice(0, this.path.length - (n || 1))),
+                            down(path) = $.inversion.invert(this, this.path + $.inversion.make_path(path) -seq)]]});
 
 __
 meta::template('comment', '\'\';     # A mechanism for line or block comments.');
