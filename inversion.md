@@ -55,5 +55,6 @@ path onto null or undefined). If the inversion is based on another inversion, th
 You can create a linked list of edits that you can later zip onto a new base. To do this, use the relative up() and down() methods. These create new inversions linked to the receiver (and therefore
 modifying the same root), but with different paths.
 
-                                up(n)      = $.inversion.invert(this, this.path.slice(0, this.path.length - (n || 1))),
-                                down(path) = $.inversion.invert(this, this.path + $.inversion.make_path(path) -seq)]]});
+                                up(n, n = n || 1) = $.inversion.invert(this, this.path.slice(0, n.constructor === Number ? this.path.length - n
+                                                                                                                         : this.path.lastIndexOf(n))),
+                                down(path)        = $.inversion.invert(this, this.path + $.inversion.make_path(path) -seq)]]});

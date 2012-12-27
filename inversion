@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  109fec5cdb0a1ad2b43f34519d04a365
-# istate: 704a6ca4a7ca8ff04b7f90e561366167
+# state:  a07744559639a7b87127c4605c66583c
+# istate: e91057ce2b75394928e896f41073cf90
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1819,8 +1819,9 @@ Relative inversions.
 You can create a linked list of edits that you can later zip onto a new base. To do this, use the relative up() and down() methods. These create new inversions linked to the receiver (and therefore
 modifying the same root), but with different paths.
 
-                            up(n)      = $.inversion.invert(this, this.path.slice(0, this.path.length - (n || 1))),
-                            down(path) = $.inversion.invert(this, this.path + $.inversion.make_path(path) -seq)]]});
+                            up(n, n = n || 1) = $.inversion.invert(this, this.path.slice(0, n.constructor === Number ? this.path.length - n
+                                                                                                                     : this.path.lastIndexOf(n))),
+                            down(path)        = $.inversion.invert(this, this.path + $.inversion.make_path(path) -seq)]]});
 
 __
 meta::template('comment', '\'\';     # A mechanism for line or block comments.');
