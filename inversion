@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  23b9caa71e3aea3d5ec8ab6c990b51de
-# istate: 8793fc4ec7618eaf6744c8a8db4dee97
+# state:  1c8168a0397acc8bbac0460f998c5851
+# istate: c7b3db1aed40cc17b22e072522743da0
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1793,7 +1793,7 @@ will create an object.
 
   where [statics = wcapture[path_component          = /\.[^\[.]+|\[\d+\]/g,
                             parse_path_component(s) = /^\[(\d+)\]$/.exec(s) -re [it ? +it[1] : s.substr(1)],
-                            parse_path(s)           = s.match(path_component) *parse_path_component -seq -rescue- raise[new Error('invalid path syntax: #{s}')],
+                            parse_path(s)           = s === '' ? [] : s.match(path_component) *parse_path_component -seq -rescue- raise[new Error('invalid path syntax: #{s}')],
                             make_path(x)            = x.constructor === String ? parse_path(x) : x,
 
                             patch(object, path, v)  = path.length === 0              ? v

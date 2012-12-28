@@ -27,7 +27,7 @@ will create an object.
 
       where [statics = wcapture[path_component          = /\.[^\[.]+|\[\d+\]/g,
                                 parse_path_component(s) = /^\[(\d+)\]$/.exec(s) -re [it ? +it[1] : s.substr(1)],
-                                parse_path(s)           = s.match(path_component) *parse_path_component -seq -rescue- raise[new Error('invalid path syntax: #{s}')],
+                                parse_path(s)           = s === '' ? [] : s.match(path_component) *parse_path_component -seq -rescue- raise[new Error('invalid path syntax: #{s}')],
                                 make_path(x)            = x.constructor === String ? parse_path(x) : x,
 
                                 patch(object, path, v)  = path.length === 0              ? v
