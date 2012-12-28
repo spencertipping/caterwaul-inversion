@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  374a3b52a50a036395cecae07807b8e9
-# istate: 548ea63737833d825c59a897cb7e0900
+# state:  23b9caa71e3aea3d5ec8ab6c990b51de
+# istate: 8793fc4ec7618eaf6744c8a8db4dee97
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1817,8 +1817,9 @@ path onto null or undefined). If the inversion is based on another inversion, th
 
 Relative inversions.
 You can create a linked list of edits that you can later zip onto a new base. To do this, use the relative up() and down() methods. These create new inversions linked to the receiver (and therefore
-modifying the same root), but with different paths. The 'root()' method navigates all the way up to the root.
+modifying the same root), but with different paths. The 'root()' method navigates all the way up to the root and the 'at()' method resets the path.
 
+                            at(path)          = $.inversion.invert(this, $.inversion.make_path(path)),
                             root()            = $.inversion.invert(this, []),
                             up(n, n = n || 1) = $.inversion.invert(this, this.path.slice(0, n.constructor === Number ? this.path.length - n
                                                                                                                      : this.path.lastIndexOf(n))),
