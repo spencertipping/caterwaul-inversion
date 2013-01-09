@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  b1b0ec295f5f1200ee0b2185e0d6f093
-# istate: 4b481943af3f594b0d6159ec60032fb1
+# state:  0880ee37f3c799be548d4c86ca3f1356
+# istate: 6d6f872de148a24577e1b58fbedc59c4
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1815,8 +1815,9 @@ path onto null or undefined). If the inversion is based on another inversion, th
          methods = capture [context(root)  = this.base instanceof $.inversion ? this.base.uninvert(root) : root || this.base,
                             uninvert(root) = $.inversion.patch(this.context(root), this.path, this.v),
 
-                            rebase(root)   = new $.inversion(root, this.path, this.v),
-                            edit(value)    = new $.inversion(this.base, this.path, value),
+                            rebase(root)      = new $.inversion(root, this.path, this.v),
+                            edit(value, path) = result -where [changed = new $.inversion(this.base, this.path + (path || []) -seq, value),
+                                                               result  = path && path.length ? changed.at(this.path) : changed],
 
 Relative inversions.
 You can create a linked list of edits that you can later zip onto a new base. To do this, use the relative up() and down() methods. These create new inversions linked to the receiver (and therefore

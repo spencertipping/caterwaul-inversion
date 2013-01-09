@@ -50,8 +50,9 @@ path onto null or undefined). If the inversion is based on another inversion, th
              methods = capture [context(root)  = this.base instanceof $.inversion ? this.base.uninvert(root) : root || this.base,
                                 uninvert(root) = $.inversion.patch(this.context(root), this.path, this.v),
 
-                                rebase(root)   = new $.inversion(root, this.path, this.v),
-                                edit(value)    = new $.inversion(this.base, this.path, value),
+                                rebase(root)      = new $.inversion(root, this.path, this.v),
+                                edit(value, path) = result -where [changed = new $.inversion(this.base, this.path + (path || []) -seq, value),
+                                                                   result  = path && path.length ? changed.at(this.path) : changed],
 
 # Relative inversions
 
