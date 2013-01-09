@@ -32,10 +32,10 @@ Note that you can't use large integer path components to create sparse arrays.
                                 parse_path(s)           = s === '' ? [] : s.match(path_component) *parse_path_component -seq -rescue- raise[new Error('invalid path syntax: #{s}')],
                                 make_path(x)            = x.constructor === String ? parse_path(x) : x,
 
-                                patch(object, path, v)  = path.length === 0              ? v
-                                                        : path[0].constructor === String ? object /pairs + [[k, patch(object[k], path.slice(1), v)]] -object -seq -where [k = path[0]]
-                                                        : path[0] >= object.length       ? object + [patch(null, path.slice(1), v)] -seq
-                                                        :                                  object *[xi === i ? patch(x, path.slice(1), v) : x] -seq -where [i = path[0]],
+                                patch(object, path, v)  = path.length === 0                 ? v
+                                                        : path[0].constructor === String    ? object /pairs + [[k, patch(object[k], path.slice(1), v)]] -object -seq -where [k = path[0]]
+                                                        : object && path[0] < object.length ? object *[xi === i ? patch(x, path.slice(1), v) : x] -seq -where [i = path[0]]
+                                                        :                                     +(object || []) + [patch(null, path.slice(1), v)] -seq,
 
                                 resolve(object, path)   = path.length === 0 ? object : resolve(object[path[0]], path.slice(1)),
                                 as_object(object)       = object.constructor === $.inversion ? object.uninvert() : object,
