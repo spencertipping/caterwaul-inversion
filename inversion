@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  84203849097927f0d0e19f8bfe4590a0
-# istate: bc32705b1ef16953657693a14218e4ce
+# state:  b7c530be2e2846c253c8b5b4a6c2bb4c
+# istate: 449c1be1566f2ab2c865ba464ee14d0e
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1799,7 +1799,7 @@ Note that you can't use large integer path components to create sparse arrays.
                             make_path(x)            = x.constructor === String ? parse_path(x) : x,
 
                             patch(object, path, v)  = path.length === 0                 ? v
-                                                    : path[0].constructor === String    ? (object || {}) /pairs + [[k, patch(object[k], path.slice(1), v)]] -object -seq -where [k = path[0]]
+                                                    : path[0].constructor === String    ? (object || {}) /pairs + [[k, patch(object && object[k], path.slice(1), v)]] -object -seq -where [k = path[0]]
                                                     : object && path[0] < object.length ? object *[xi === i ? patch(x, path.slice(1), v) : x] -seq -where [i = path[0]]
                                                     :                                     +(object || []) + [patch(null, path.slice(1), v)] -seq,
 
