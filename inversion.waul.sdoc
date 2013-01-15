@@ -56,6 +56,7 @@ path onto null or undefined). If the inversion is based on another inversion, th
                             is(offset, p) = statics.piece_matches(p, this.path[this.path.length + offset]),
 
                             path_string() = this.path *[x.constructor === String ? '.#{x}' : '[#{x}]'] -seq -re- it.join(''),
+                            path_at(n)    = this.path[this.path.length + n],
 
                             reset(root)  = new $.inversion(root, this.path, this.v),
                             rebase(root) = root === this.base               ? this

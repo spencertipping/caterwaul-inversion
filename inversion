@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  5717feda4899e4c06464f4f51b701ca4
-# istate: 8528321e18faa0393a8485d459220ed3
+# state:  7ce1fe47aa8ea206a81ed35716078fdc
+# istate: c0b793f29a3169da838a5cb7bfc3b64e
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1824,6 +1824,7 @@ path onto null or undefined). If the inversion is based on another inversion, th
                             is(offset, p) = statics.piece_matches(p, this.path[this.path.length + offset]),
 
                             path_string() = this.path *[x.constructor === String ? '.#{x}' : '[#{x}]'] -seq -re- it.join(''),
+                            path_at(n)    = this.path[this.path.length + n],
 
                             reset(root)  = new $.inversion(root, this.path, this.v),
                             rebase(root) = root === this.base               ? this
