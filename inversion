@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  b7c530be2e2846c253c8b5b4a6c2bb4c
-# istate: 449c1be1566f2ab2c865ba464ee14d0e
+# state:  e80f4eb5f4656a8b52e455b8e7d35c29
+# istate: 555b00e5c57651ebec1deba69c86e9fc
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1803,7 +1803,7 @@ Note that you can't use large integer path components to create sparse arrays.
                                                     : object && path[0] < object.length ? object *[xi === i ? patch(x, path.slice(1), v) : x] -seq -where [i = path[0]]
                                                     :                                     +(object || []) + [patch(null, path.slice(1), v)] -seq,
 
-                            resolve(object, path)   = path.length === 0 ? object : resolve(object[path[0]], path.slice(1)),
+                            resolve(object, path)   = path.length === 0 ? object : resolve((object || {})[path[0]], path.slice(1)),
                             as_object(object)       = object.constructor === $.inversion ? object.uninvert() : object,
 
                             invert(object, path)    = new $.inversion(object, p, resolve(object /!as_object, p)) -where [p = make_path(path)]],

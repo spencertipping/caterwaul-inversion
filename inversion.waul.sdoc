@@ -35,7 +35,7 @@ Note that you can't use large integer path components to create sparse arrays.
                                                     : object && path[0] < object.length ? object *[xi === i ? patch(x, path.slice(1), v) : x] -seq -where [i = path[0]]
                                                     :                                     +(object || []) + [patch(null, path.slice(1), v)] -seq,
 
-                            resolve(object, path)   = path.length === 0 ? object : resolve(object[path[0]], path.slice(1)),
+                            resolve(object, path)   = path.length === 0 ? object : resolve((object || {})[path[0]], path.slice(1)),
                             as_object(object)       = object.constructor === $.inversion ? object.uninvert() : object,
 
                             invert(object, path)    = new $.inversion(object, p, resolve(object /!as_object, p)) -where [p = make_path(path)]],
