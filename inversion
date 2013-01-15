@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  e80f4eb5f4656a8b52e455b8e7d35c29
-# istate: 555b00e5c57651ebec1deba69c86e9fc
+# state:  5717feda4899e4c06464f4f51b701ca4
+# istate: 8528321e18faa0393a8485d459220ed3
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1806,16 +1806,30 @@ Note that you can't use large integer path components to create sparse arrays.
                             resolve(object, path)   = path.length === 0 ? object : resolve((object || {})[path[0]], path.slice(1)),
                             as_object(object)       = object.constructor === $.inversion ? object.uninvert() : object,
 
+                            piece_matches(p, x)     = p.constructor === Function                           ? p(x)
+                                                    : p.constructor === RegExp                             ? p.exec(x)
+                                                    : p.constructor === String || p.constructor === Number ? p === x
+                                                    :                                                        raise [new Error('unknown selector type: #{p}')],
+
                             invert(object, path)    = new $.inversion(object, p, resolve(object /!as_object, p)) -where [p = make_path(path)]],
 
 Zipping and rebasing.
 Every inversion contains a 'root' or 'base' that keeps its context valid, but you can change this dynamically. The only requirement is that the new base support the current path (i.e. not map any prefix
 path onto null or undefined). If the inversion is based on another inversion, the context will be zipped against the new root if you specify one.
 
-         methods = capture [context(root)  = this.base instanceof $.inversion ? this.base.uninvert(root) : root || this.base,
-                            uninvert(root) = $.inversion.patch(this.context(root), this.path, this.v),
+         methods = capture [context()  = this.base instanceof $.inversion ? this.base.uninvert() : this.base,
+                            uninvert() = this.uninversion -dcq- $.inversion.patch(this.context(), this.path, this.v),
 
-                            rebase(root)      = new $.inversion(root, this.path, this.v),
+                            get(path)     = statics.resolve(this.v, path),
+                            is(offset, p) = statics.piece_matches(p, this.path[this.path.length + offset]),
+
+                            path_string() = this.path *[x.constructor === String ? '.#{x}' : '[#{x}]'] -seq -re- it.join(''),
+
+                            reset(root)  = new $.inversion(root, this.path, this.v),
+                            rebase(root) = root === this.base               ? this
+                                         : this.base instanceof $.inversion ? this.reset(this.base.rebase(root))
+                                         :                                    this.reset(root),
+
                             edit(value, path) = result -where [changed = new $.inversion(this.base, this.path + (path || []) -seq, value),
                                                                result  = path && path.length ? changed.at(this.path) : changed],
 
