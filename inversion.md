@@ -66,8 +66,9 @@ path onto null or undefined). If the inversion is based on another inversion, th
                                              : this.base instanceof $.inversion ? this.reset(this.base.rebase(root))
                                              :                                    this.reset(root),
 
-                                edit(value, path) = result -where [changed = new $.inversion(this.base, this.path + (path || []) -seq, value),
-                                                                   result  = path && path.length ? changed.at(this.path) : changed],
+                                edit(value, path) = result -where [newpath = $.inversion.make_path(path || []),
+                                                                   changed = new $.inversion(this.base, this.path + newpath -seq, value),
+                                                                   result  = newpath.length ? changed.at(this.path) : changed],
 
 # Relative inversions
 
