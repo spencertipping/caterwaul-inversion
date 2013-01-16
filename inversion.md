@@ -55,7 +55,7 @@ path onto null or undefined). If the inversion is based on another inversion, th
              methods = capture [context()  = this.base instanceof $.inversion ? this.base.uninvert() : this.base,
                                 uninvert() = this.uninversion -dcq- $.inversion.patch(this.context(), this.path, this.v),
 
-                                get(path)     = statics.resolve(this.v, path),
+                                get(path)     = statics.resolve(this.v, $.inversion.make_path(path)),
                                 is(offset, p) = statics.piece_matches(p, this.path[this.path.length + offset]),
 
                                 path_string() = this.path *[x.constructor === String ? '.#{x}' : '[#{x}]'] -seq -re- it.join(''),

@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  5c349e5652284d58cfe4da192927ae03
-# istate: 35ca4a8ed9b8b61d35a83c8d9aa28c58
+# state:  7ea5ad76edc5e9d1308bfc916e4f1d67
+# istate: 474b79a63fa0fad985cdefe5c2c811a7
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1820,7 +1820,7 @@ path onto null or undefined). If the inversion is based on another inversion, th
          methods = capture [context()  = this.base instanceof $.inversion ? this.base.uninvert() : this.base,
                             uninvert() = this.uninversion -dcq- $.inversion.patch(this.context(), this.path, this.v),
 
-                            get(path)     = statics.resolve(this.v, path),
+                            get(path)     = statics.resolve(this.v, $.inversion.make_path(path)),
                             is(offset, p) = statics.piece_matches(p, this.path[this.path.length + offset]),
 
                             path_string() = this.path *[x.constructor === String ? '.#{x}' : '[#{x}]'] -seq -re- it.join(''),
