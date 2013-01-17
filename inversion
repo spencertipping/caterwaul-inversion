@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # 99aeabc9ec7fe80b1b39f5e53dc7e49e      <- self-modifying Perl magic
-# state:  7ea5ad76edc5e9d1308bfc916e4f1d67
-# istate: 474b79a63fa0fad985cdefe5c2c811a7
+# state:  0c1a8241256fb28796dbaef37c477581
+# istate: edd51b4110d99cc0d9d89c2440915211
 # id:     ef9adca7ed95b0ba087d6f81c09907d9
 
 # This is a self-modifying Perl file. I'm sorry you're viewing the source (it's
@@ -1806,7 +1806,8 @@ Note that you can't use large integer path components to create sparse arrays.
                             resolve(object, path)   = path.length === 0 ? object : resolve((object || {})[path[0]], path.slice(1)),
                             as_object(object)       = object.constructor === $.inversion ? object.uninvert() : object,
 
-                            piece_matches(p, x)     = p.constructor === Function                           ? p(x)
+                            piece_matches(p, x)     = p === String || p === Number                         ? x.constructor === p
+                                                    : p.constructor === Function                           ? p(x)
                                                     : p.constructor === RegExp                             ? p.exec(x)
                                                     : p.constructor === String || p.constructor === Number ? p === x
                                                     :                                                        raise [new Error('unknown selector type: #{p}')],

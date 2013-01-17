@@ -38,7 +38,8 @@ Note that you can't use large integer path components to create sparse arrays.
                             resolve(object, path)   = path.length === 0 ? object : resolve((object || {})[path[0]], path.slice(1)),
                             as_object(object)       = object.constructor === $.inversion ? object.uninvert() : object,
 
-                            piece_matches(p, x)     = p.constructor === Function                           ? p(x)
+                            piece_matches(p, x)     = p === String || p === Number                         ? x.constructor === p
+                                                    : p.constructor === Function                           ? p(x)
                                                     : p.constructor === RegExp                             ? p.exec(x)
                                                     : p.constructor === String || p.constructor === Number ? p === x
                                                     :                                                        raise [new Error('unknown selector type: #{p}')],
